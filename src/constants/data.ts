@@ -1,0 +1,18 @@
+export const productImageData = [
+	require('../assets/images/products/1.png'),
+	require('../assets/images/products/2.png'),
+	require('../assets/images/products/3.png'),
+	require('../assets/images/products/4.png'),
+	require('../assets/images/products/5.png'),
+	require('../assets/images/products/6.png'),
+	require('../assets/images/products/7.png'),
+	require('../assets/images/products/8.png'),
+	require('../assets/images/products/9.png'),
+	require('../assets/images/products/10.png'),
+	require('../assets/images/products/11.png'),
+	require('../assets/images/products/12.png'),
+	require('../assets/images/products/13.png'),
+	require('../assets/images/products/14.png'),
+	require('../assets/images/products/15.png'),
+	require('../assets/images/products/16.png'),
+]

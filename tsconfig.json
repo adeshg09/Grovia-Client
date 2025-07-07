@@ -1,0 +1,21 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@env": ["node_modules/react-native-dotenv"],
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@config/*": ["config/*"],
+      "@hooks/*": ["hooks/*"],
+      "@models/*": ["models/*"],
+      "@router/*": ["router/*"],
+      "@screens/*": ["screens/*"],
+      "@services/*": ["services/*"],
+      "@static/*": ["static/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"]
+    }
+  }
+}
