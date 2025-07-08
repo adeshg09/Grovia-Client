@@ -6,6 +6,7 @@ import CaptainSvg from './captain.svg'
 import DropDownSvg from './dropDown.svg'
 import ThreeDotsSvg from './3dots.svg'
 import ArrowRightSvg from './arrowRight.svg'
+import LocationPermissionSvg from './locationPermission.svg'
 import GoogleSvg from './google.svg'
 import AppleSvg from './apple.svg'
 import AppleDarkSvg from './appleDark.svg'
@@ -30,6 +31,7 @@ export {
 	DropDownSvg,
 	ThreeDotsSvg,
 	ArrowRightSvg,
+	LocationPermissionSvg,
 	GoogleSvg,
 	AppleSvg,
 	FaceBookSvg,

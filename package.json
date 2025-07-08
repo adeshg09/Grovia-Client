@@ -11,6 +11,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@gorhom/bottom-sheet": "^5.1.6",
 		"@homielab/react-native-auto-scroll": "^0.0.10",
 		"@hookform/resolvers": "^5.0.1",
 		"@kartikbhalla/react-native-truecaller": "^0.2.0",
@@ -42,6 +43,7 @@
 		"react-native-create-thumbnail": "^2.0.0",
 		"react-native-fast-image": "^8.6.3",
 		"react-native-fs": "^2.20.0",
+		"react-native-geolocation-service": "^5.3.1",
 		"react-native-gesture-handler": "^2.24.0",
 		"react-native-get-random-values": "^1.11.0",
 		"react-native-image-picker": "^7.1.2",
@@ -51,6 +53,7 @@
 		"react-native-navigation-bar-color": "^2.0.2",
 		"react-native-pager-view": "^6.3.1",
 		"react-native-permissions": "^5.2.5",
+		"react-native-raw-bottom-sheet": "^3.0.0",
 		"react-native-reanimated": "^3.17.1",
 		"react-native-responsive-fontsize": "^0.5.1",
 		"react-native-responsive-screen": "^1.4.2",

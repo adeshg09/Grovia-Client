@@ -11,12 +11,10 @@ import { getThemeColor } from '../../utils/helpers'
 import { useTheme } from '../../hooks/useTheme'
 import { refHeightCalc, refWidthCalc } from '../../static/dimensions'
 import Button from '../Buttons/Button'
-import { SvgIcon } from '../../assets'
 
 // -------------------------------------------------------------------------------------------------------------------------
 
 /* Interface */
-
 type PropsBottomNavigationBar = {
 	leftLabel?: string
 	rightLabel?: string
@@ -121,6 +119,7 @@ const BottomNavigationBar: React.FC<PropsBottomNavigationBar> = ({
 
 export default BottomNavigationBar
 
+/* Styles */
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',

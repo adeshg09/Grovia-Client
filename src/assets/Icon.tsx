@@ -11,6 +11,7 @@ import {
 	ThreeDotsSvg,
 	ArrowLeftSvg,
 	ArrowRightSvg,
+	LocationPermissionSvg,
 	FaceBookSvg,
 	GoogleSvg,
 	TwitterSvg,
@@ -61,6 +62,10 @@ const ThreeDots: React.FC<IconProps> = ({ ...rest }) => {
 
 const ArrowRight: React.FC<IconProps> = ({ ...rest }) => {
 	return <ArrowRightSvg {...rest} />
+}
+
+const LocationPermission: React.FC<IconProps> = ({ ...rest }) => {
+	return <LocationPermissionSvg {...rest} />
 }
 
 const Google: React.FC<IconProps> = ({ ...rest }) => {
@@ -115,6 +120,7 @@ const Icon = {
 	DropDown,
 	ThreeDots,
 	ArrowRight,
+	LocationPermission,
 	Google,
 	Apple,
 	FaceBook,
