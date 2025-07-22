@@ -53,7 +53,7 @@ export default Avatar
 const styles = StyleSheet.create({
 	imageContainer: {
 		marginRight: 2,
-		width: 24 * refWidthCalc,
+		width: 20 * refWidthCalc,
 		aspectRatio: 1,
 		borderRadius: 24 * refWidthCalc,
 		backgroundColor: colors.grey[200],
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
 		height: '100%',
 	},
 	initialText: {
-		color: colors.primary[900],
+		color: colors.primary[500],
 	},
 })

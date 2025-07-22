@@ -2,6 +2,7 @@
 import {
 	REACT_APP_BASE_URL,
 	REACT_APP_GOOGLE_PLACES_API_KEY,
+	REACT_APP_OPEN_WEATHER_MAP_API_KEY,
 	REACT_APP_TRUECALLER_ANDROID_CLIENT_ID,
 	REACT_APP_TRUECALLER_IOS_CLIENT_ID,
 } from '@env'
@@ -10,9 +11,8 @@ import {
 
 export const envConfig = {
 	base: {
-		// baseUrl: 'http://192.168.201.11:8000/api/v1',
-		baseUrl:
-			REACT_APP_BASE_URL || 'https://api-grovia-gateway.onrender.com/api/v1',
+		// baseUrl: 'http://192.168.137.1:8000/api/v1',
+		baseUrl: REACT_APP_BASE_URL || 'https://api.grovia.builtbyag09.tech/api/v1',
 	},
 	clientId: {
 		truecaller: {
@@ -22,7 +22,6 @@ export const envConfig = {
 			ios: REACT_APP_TRUECALLER_IOS_CLIENT_ID || '0',
 		},
 	},
-	GOOGLE_PLACES_API_KEY:
-		REACT_APP_GOOGLE_PLACES_API_KEY ||
-		'AIzaSyCoUpJ5NVoAPBe7g0Jpu1TWdAjWl8_6rTQ',
+	GOOGLE_PLACES_API_KEY: REACT_APP_GOOGLE_PLACES_API_KEY,
+	OPEN_WEATHER_MAP_API_KEY: REACT_APP_OPEN_WEATHER_MAP_API_KEY,
 }

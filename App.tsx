@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 
 /* Relative Imports */
+import { Host } from 'react-native-portalize'
 import { Provider } from 'react-redux'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -18,13 +19,15 @@ import { queryClient } from './src/config/queryClientConfig'
 const App = () => {
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<ThemeProvider>
-				<QueryClientProvider client={queryClient}>
-					<Provider store={store}>
-						<Router />
-					</Provider>
-				</QueryClientProvider>
-			</ThemeProvider>
+			<Host>
+				<ThemeProvider>
+					<QueryClientProvider client={queryClient}>
+						<Provider store={store}>
+							<Router />
+						</Provider>
+					</QueryClientProvider>
+				</ThemeProvider>
+			</Host>
 		</GestureHandlerRootView>
 	)
 }

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 
 /* Relative Imports */
 import { NavigationContainer } from '@react-navigation/native'
-import { hideNavigationBar } from 'react-native-navigation-bar-color'
 import RNBootSplash from 'react-native-bootsplash'
 
 /* Local Imports */
@@ -17,6 +16,8 @@ import { authSliceActions } from '../store/authSlice'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { runOnJS } from 'react-native-reanimated'
 import RegistrationStackNavigation from './RegistrationStackNavigation'
+import { changeNavigationColor, getThemeColor } from '../utils/helpers'
+import colors from '../static/colors'
 
 // -----------------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ import RegistrationStackNavigation from './RegistrationStackNavigation'
 const Router = () => {
 	/* Hooks */
 	const dispatch = useAppDispatch()
-	const { toggleTheme } = useTheme()
+	const { toggleTheme, theme } = useTheme()
 	const isLoggedIn = useAppSelector(store => store.auth.loggedIn)
 	const isRegisted = useAppSelector(store => store.auth.isRegisted)
 
@@ -34,6 +35,12 @@ const Router = () => {
 		.onEnd(() => {
 			runOnJS(toggleTheme)()
 		})
+
+	const navigationBarColor = getThemeColor(
+		theme,
+		colors.others.white,
+		colors.dark.dark1,
+	)
 
 	/* States */
 	const [isAppReady, setIsAppReady] = useState(false)
@@ -99,14 +106,10 @@ const Router = () => {
 
 	const initializeApp = async () => {
 		await getUser()
-		hideNavigationBar()
 	}
 
 	/* Side-Effects */
 	useEffect(() => {
-		// changeNavigationColor(
-		// 	getThemeColor(theme, colors.others.white, colors.dark.dark1),
-		// )
 		console.log('redux isLoggedIn', isLoggedIn)
 		console.log('redux isRegisted', isRegisted)
 		initializeApp().finally(() => {
@@ -128,6 +131,7 @@ const Router = () => {
 				) : (
 					<AuthStackNavigation />
 				)}
+				{/* <AppStackNavigation /> */}
 			</NavigationContainer>
 		</GestureDetector>
 	)

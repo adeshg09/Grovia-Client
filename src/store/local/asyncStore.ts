@@ -12,7 +12,9 @@ const localStoreKeys = {
 	USER_DATA: '@user',
 	USER_ACCESS_TOKEN: '@userAccessToken',
 	USER_REFRESH_TOKEN: '@userRefreshToken',
-	CAPTAIN_ONBOARDING: '@captain_onboarding_state',
+	CAPTAIN_ONBOARDING: '@captainOnboardingState',
+	CUSTOMER_DELIVERY_CURRENT_LOCATION: '@customerDeliveryCurrentLocation',
+	CUSTOMER_DELIVERY_SAVED_ADDRESSES: '@customerDeliverySavedAddresses',
 }
 
 /* Functions */

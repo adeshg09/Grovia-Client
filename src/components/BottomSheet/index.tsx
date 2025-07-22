@@ -9,6 +9,7 @@ import BottomSheet, {
 	BottomSheetProps,
 	BottomSheetView,
 } from '@gorhom/bottom-sheet'
+import { Portal } from 'react-native-portalize'
 
 /* Local Imports */
 import { refHeightCalc, refWidthCalc } from '../../static/dimensions'
@@ -64,33 +65,39 @@ const CustomBottomSheet = forwardRef<
 
 	/* Output */
 	return (
-		<BottomSheet
-			ref={sheetRef}
-			index={index}
-			snapPoints={memoizedSnapPoints}
-			enablePanDownToClose
-			backgroundStyle={{
-				backgroundColor: getThemeColor(
-					theme,
-					colors.others.white,
-					colors.dark.dark2,
-				),
-				borderTopLeftRadius: 44 * refHeightCalc,
-				borderTopRightRadius: 44 * refHeightCalc,
-				borderWidth: 1,
-				borderColor: getThemeColor(theme, colors.grey[100], colors.dark.dark3),
-			}}
-			backdropComponent={renderBackdrop}
-			handleIndicatorStyle={{
-				backgroundColor: getThemeColor(
-					theme,
-					colors.grey[300],
-					colors.dark.dark3,
-				),
-			}}
-			{...rest}>
-			<BottomSheetView style={styles.container}>{children}</BottomSheetView>
-		</BottomSheet>
+		<Portal>
+			<BottomSheet
+				ref={sheetRef}
+				index={index}
+				snapPoints={memoizedSnapPoints}
+				enablePanDownToClose
+				backgroundStyle={{
+					backgroundColor: getThemeColor(
+						theme,
+						colors.others.white,
+						colors.dark.dark2,
+					),
+					borderTopLeftRadius: 44 * refHeightCalc,
+					borderTopRightRadius: 44 * refHeightCalc,
+					borderWidth: 1,
+					borderColor: getThemeColor(
+						theme,
+						colors.grey[100],
+						colors.dark.dark3,
+					),
+				}}
+				backdropComponent={renderBackdrop}
+				handleIndicatorStyle={{
+					backgroundColor: getThemeColor(
+						theme,
+						colors.grey[300],
+						colors.dark.dark3,
+					),
+				}}
+				{...rest}>
+				<BottomSheetView style={styles.container}>{children}</BottomSheetView>
+			</BottomSheet>
+		</Portal>
 	)
 })
 

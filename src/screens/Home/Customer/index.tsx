@@ -1,30 +1,36 @@
 /* Imports */
 import React, { useEffect, useRef } from 'react'
-import { Text, View, TouchableOpacity, BackHandler } from 'react-native'
+import { Platform, Animated as RNAnimated } from 'react-native'
 
 /* Relative Imports */
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import {
+	useAnimatedStyle,
+	useDerivedValue,
+	useSharedValue,
+	withTiming,
+} from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import {
+	CollapsibleContainer,
+	CollapsibleHeaderContainer,
+	CollapsibleScrollView,
+	useCollapsibleContext,
+	withCollapsibleContext,
+} from '@r0b0t3d/react-native-collapsible'
 
 /* Local Imports */
 import { AppStackParamList } from '../../../models/navigation/AppStackParamList'
-import Wrapper from '../../../components/Wrapper'
 import { useTheme } from '../../../hooks/useTheme'
-import { getTypographyStyles } from '../../../static/gstyles'
-import colors from '../../../static/colors'
-import { getThemeColor } from '../../../utils/helpers'
-import { styles } from './index.styles'
-import CustomBottomSheet, {
-	CustomBottomSheetRef,
-} from '../../../components/BottomSheet'
-import {
-	requestLocationPermission,
-	getCurrentLocation,
-	isLocationPermissionGranted,
-	getAddressFromCoords,
-} from '../../../utils/location'
-import { SvgIcon } from '../../../assets'
-import { refWidthCalc, refHeightCalc } from '../../../static/dimensions'
-import Button from '../../../components/Buttons/Button'
+import NoticeAnimation from './components/NoticeAnimation'
+import { refHeightCalc, windowHeight } from '../../../static/dimensions'
+import AnimatedHeader from './components/HeaderAnimation'
+import StickySearchBar from './components/StickySearchBar'
+import HomeContent from './components/HomeContent'
+import { CustomBottomSheetRef } from '../../../components/BottomSheet'
+import LocationBottomSheet from './components/LocationBottomSheet'
+import BackToTopButton from './components/BackToTopButton'
+import Visuals from './components/Visuals'
 
 // -------------------------------------------------------------------------------------------------------------------------
 
@@ -42,134 +48,110 @@ type PropsCustomerHome = NativeStackScreenProps<
  * @component
  */
 const CustomerHome: React.FC<PropsCustomerHome> = ({ navigation }) => {
+	/* Constants */
+	const noticeHeight =
+		(Platform.OS === 'ios' ? windowHeight * 0.12 : windowHeight * 0.1) + 12
+
 	/* Hooks */
 	const { theme } = useTheme()
+	const noticePosition = useRef(new RNAnimated.Value(-noticeHeight)).current
 	const bottomSheetRef = useRef<CustomBottomSheetRef>(null)
-
-	/* States */
-	const [isLoading, setIsLoading] = React.useState(false)
+	const insets = useSafeAreaInsets()
+	const { scrollY, expand } = useCollapsibleContext()
+	const previousScroll = useSharedValue(0)
+	const isScrollingUp = useDerivedValue(() => {
+		const scrollingUp =
+			scrollY.value < previousScroll.value && scrollY.value > 180
+		previousScroll.value = scrollY.value
+		return scrollingUp
+	})
+	const backToTopStyle = useAnimatedStyle(() => {
+		const visible = isScrollingUp.value
+		return {
+			opacity: withTiming(visible ? 1 : 0, { duration: 300 }),
+			transform: [
+				{
+					translateY: withTiming(visible ? 0 : 10, { duration: 300 }),
+				},
+			],
+		}
+	})
 
 	/* Functions */
-	const handleContinuePress = async () => {
-		setIsLoading(true)
-		const granted = await requestLocationPermission()
-		if (!granted) {
-			setIsLoading(false)
-			return
-		}
+	const handleSlideUp = () => {
+		RNAnimated.timing(noticePosition, {
+			toValue: -noticeHeight,
+			duration: 300,
+			useNativeDriver: false,
+		}).start()
+	}
 
-		try {
-			const position = await getCurrentLocation()
-			const { latitude, longitude } = position.coords
-			console.log('Location enabled:', position)
-			const address = await getAddressFromCoords(latitude, longitude)
-			console.log('Address:', address)
-			bottomSheetRef.current?.close()
-		} catch (err) {
-			console.log('Device-level location OFF:', err)
-		}
+	const handleSlideDown = () => {
+		RNAnimated.timing(noticePosition, {
+			toValue: 0,
+			duration: 300,
+			useNativeDriver: false,
+		}).start()
+	}
 
-		setIsLoading(false)
+	const handleShowNotice = () => {
+		handleSlideDown()
+		const timeoutId = setTimeout(() => {
+			handleSlideUp()
+		}, 3500)
+		return () => clearTimeout(timeoutId)
 	}
 
 	/* Side-Effects */
 	useEffect(() => {
-		const backAction = () => true
-		const backHandler = BackHandler.addEventListener(
-			'hardwareBackPress',
-			backAction,
-		)
-		return () => backHandler.remove()
-	}, [])
-
-	useEffect(() => {
-		const checkLocationAndShowSheet = async () => {
-			const isGranted = await isLocationPermissionGranted()
-
-			if (!isGranted) {
-				setTimeout(() => {
-					if (bottomSheetRef.current) {
-						bottomSheetRef.current.expand()
-					}
-				}, 300)
-			}
-		}
-
-		checkLocationAndShowSheet()
+		handleShowNotice()
 	}, [])
 
 	/* Output */
 	return (
-		<Wrapper
-			statusBarColor={getThemeColor(
-				theme,
-				colors.others.white,
-				colors.dark.dark1,
-			)}>
-			<View
-				style={[
-					styles.container,
-					{
-						backgroundColor: getThemeColor(
-							theme,
-							colors.others.white,
-							colors.dark.dark1,
-						),
-					},
-				]}>
-				<Text
-					style={{
-						...getTypographyStyles(theme).headingH5Bold,
-						color: colors.others.red,
-					}}>
-					Welcome to Grovia App
-				</Text>
-			</View>
+		<NoticeAnimation
+			noticePosition={noticePosition}
+			noticeHeight={noticeHeight}>
+			<>
+				{/* <Visuals /> */}
+				{/* <SafeAreaView /> */}
 
-			{/* Bottom Sheet */}
-			<CustomBottomSheet
-				ref={bottomSheetRef}
-				snapPoints={['45%']}
-				enablePanDownToClose={false}
-				enableHandlePanningGesture={false}
-				enableContentPanningGesture={false}
-				backdropPressBehavior="none">
-				<SvgIcon.LocationPermission
-					width={140 * refWidthCalc}
-					height={140 * refHeightCalc}
+				<BackToTopButton
+					scrollY={scrollY}
+					backToTopStyle={backToTopStyle}
+					expand={expand}
 				/>
-				<View
-					style={{
-						alignItems: 'center',
-						justifyContent: 'center',
-						gap: 8 * refHeightCalc,
-					}}>
-					<Text
-						style={{
-							...getTypographyStyles(theme).headingH4Bold,
-						}}>
-						Location permission is off
-					</Text>
-					<Text
-						style={{
-							...getTypographyStyles(theme).bodyLargeMedium,
-							color: colors.grey[600],
-							textAlign: 'center',
-						}}>
-						Please enable location permission for better delivery experience
-					</Text>
-				</View>
 
-				<Button
-					title="Continue"
-					onPress={handleContinuePress}
-					buttonStyles={{ width: '100%' }}
-					loading={isLoading}
-					disabled={isLoading}
-				/>
-			</CustomBottomSheet>
-		</Wrapper>
+				<CollapsibleContainer
+					style={{
+						flex: 1,
+						marginTop: insets.top || 20 * refHeightCalc,
+					}}>
+					<CollapsibleHeaderContainer
+						containerStyle={{
+							backgroundColor: 'transparent',
+						}}>
+						<AnimatedHeader
+							showNotice={handleShowNotice}
+							bottomSheetRef={bottomSheetRef}
+						/>
+						<StickySearchBar />
+					</CollapsibleHeaderContainer>
+
+					<CollapsibleScrollView
+						nestedScrollEnabled
+						style={{
+							flex: 1,
+						}}
+						showsVerticalScrollIndicator={false}>
+						<HomeContent navigation={navigation} />
+					</CollapsibleScrollView>
+				</CollapsibleContainer>
+
+				<LocationBottomSheet bottomSheetRef={bottomSheetRef} />
+			</>
+		</NoticeAnimation>
 	)
 }
 
-export default CustomerHome
+export default withCollapsibleContext(CustomerHome)

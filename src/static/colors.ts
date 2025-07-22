@@ -99,6 +99,14 @@ const colors = {
 		purple: 'rgba(156, 39, 176, 0.08)',
 		cyan: 'rgba(0, 188, 212, 0.08)',
 	},
+
+	darkWeatherColors: [
+		'rgba(54, 67, 92, 1)',
+		'rgba(54, 67, 92, 0.9)',
+		'rgba(54, 67, 92, 0.8)',
+		'rgba(54, 67, 92, 0.2)',
+		'rgba(54, 67, 92, 0.0)',
+	],
 }
 
 export default colors

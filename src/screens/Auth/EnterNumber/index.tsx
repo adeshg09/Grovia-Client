@@ -202,15 +202,15 @@ const EnterNumber: React.FC<PropsEnterNumber> = ({ navigation, route }) => {
 		const showSub = Keyboard.addListener('keyboardDidShow', e => {
 			const offset = e.endCoordinates.height
 			Animated.timing(translateY, {
-				toValue: -offset,
-				duration: 300,
+				toValue: -offset * 1.1,
+				duration: 700,
 				useNativeDriver: true,
 			}).start()
 		})
 		const hideSub = Keyboard.addListener('keyboardDidHide', () => {
 			Animated.timing(translateY, {
 				toValue: 0,
-				duration: 300,
+				duration: 700,
 				useNativeDriver: true,
 			}).start()
 		})

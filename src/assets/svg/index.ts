@@ -21,6 +21,16 @@ import SuccessSvg from './Success.svg'
 import CalenderSvg from './Calender.svg'
 import UserSvg from './User.svg'
 import PhoneSvg from './Phone.svg'
+import HomeSvg from './home.svg'
+import QuickListSvg from './quickList.svg'
+import CategoriesSvg from './categories.svg'
+import InstaDishSvg from './instaDish.svg'
+import CartSvg from './cart.svg'
+import Banner1Svg from './banner1.svg'
+import Banner2Svg from './banner2.svg'
+import SearchSvg from './search.svg'
+import WalletSvg from './wallet.svg'
+import LocationSvg from './location.svg'
 
 export {
 	ArrowLeftSvg,
@@ -46,4 +56,14 @@ export {
 	CalenderSvg,
 	UserSvg,
 	PhoneSvg,
+	HomeSvg,
+	QuickListSvg,
+	CategoriesSvg,
+	InstaDishSvg,
+	CartSvg,
+	Banner1Svg,
+	Banner2Svg,
+	SearchSvg,
+	WalletSvg,
+	LocationSvg,
 }

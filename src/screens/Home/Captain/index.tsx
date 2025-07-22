@@ -37,6 +37,8 @@ const CaptainHome: React.FC<PropsCaptainHome> = ({ navigation, route }) => {
 	console.log('theme', theme)
 	const dispatch = useAppDispatch()
 
+	console.log('🟢 CaptainHome mounted')
+
 	/* States */
 
 	/* Functions */
@@ -54,39 +56,21 @@ const CaptainHome: React.FC<PropsCaptainHome> = ({ navigation, route }) => {
 			<View
 				style={[
 					styles.container,
-					theme === 'dark'
-						? { backgroundColor: colors.dark.dark1 }
-						: { backgroundColor: colors.others.white },
+					{
+						backgroundColor: getThemeColor(
+							theme,
+							colors.others.white,
+							colors.dark.dark1,
+						),
+					},
 				]}>
 				<Text
-					onPress={toggleTheme}
 					style={{
 						...getTypographyStyles(theme).headingH5Bold,
 						color: colors.others.red,
 					}}>
-					Welcome to Grovia App
+					Welcome to Grovia App Captain
 				</Text>
-				<TouchableOpacity
-					onPress={toggleTheme}
-					style={{
-						backgroundColor: colors.primary[500],
-					}}>
-					<Text>Toggle</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					onPress={async () => {
-						await removeItem(localStoreKeys.USER_DATA)
-						await removeItem(localStoreKeys.USER_ACCESS_TOKEN)
-						await removeItem(localStoreKeys.USER_REFRESH_TOKEN)
-						await removeItem(localStoreKeys.LOGGED_IN)
-						await removeItem(localStoreKeys.IS_REGISTED)
-						dispatch(authSliceActions?.logout())
-					}}
-					style={{
-						backgroundColor: colors.primary[500],
-					}}>
-					<Text>Logout</Text>
-				</TouchableOpacity>
 			</View>
 		</Wrapper>
 	)

@@ -5,6 +5,8 @@ import { Platform } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions'
 import { envConfig } from '../config/envConfig'
+import { AppDispatch } from '../store/store'
+import { deliveryLocationSliceActions } from '../store/customer/deliveryLocationSlice'
 
 // -------------------------------------------------------------------------------------------------------------------------
 
@@ -70,6 +72,7 @@ export const getAddressFromCoords = async (
 			`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${envConfig.GOOGLE_PLACES_API_KEY}`,
 		)
 		const data = await response.json()
+		console.log('Address data', data)
 		if (data.status === 'OK' && data.results.length > 0) {
 			return data.results[0].formatted_address
 		}
@@ -78,5 +81,43 @@ export const getAddressFromCoords = async (
 	} catch (error) {
 		console.error('Geocoding API error:', error)
 		return null
+	}
+}
+
+/**
+ * Set and save current location to redux store
+ */
+export const setAndSaveCurrentLocation = async (
+	dispatch: AppDispatch,
+	options?: {
+		clearSelected?: boolean
+		logPrefix?: string
+	},
+): Promise<boolean> => {
+	try {
+		const position = await getCurrentLocation()
+		const { latitude, longitude } = position.coords
+		const addressLine = await getAddressFromCoords(latitude, longitude)
+
+		dispatch(
+			deliveryLocationSliceActions.setCurrentLocation({
+				addressLine: addressLine ?? '',
+				lat: latitude,
+				lng: longitude,
+			}),
+		)
+
+		if (options?.clearSelected) {
+			dispatch(deliveryLocationSliceActions.setSelectedLocation(null))
+		}
+
+		if (options?.logPrefix) {
+			console.log(`📍 ${options.logPrefix} Address:`, addressLine)
+		}
+
+		return true
+	} catch (err) {
+		console.log('❌ Error while setting current location:', err)
+		return false
 	}
 }

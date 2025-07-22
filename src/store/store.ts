@@ -2,6 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './authSlice'
 import captainOnboardingSlice from './captain/captainOnboardingSlice'
+import deliveryLocationSlice from './customer/deliveryLocationSlice'
 
 // -------------------------------------------------------------------------------------------------------------------------
 
@@ -9,6 +10,7 @@ const store = configureStore({
 	reducer: {
 		auth: authSlice.reducer,
 		captain: captainOnboardingSlice.reducer,
+		customerDeliveryLocation: deliveryLocationSlice.reducer,
 	},
 })
 

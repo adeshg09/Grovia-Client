@@ -24,6 +24,16 @@ import {
 	CalenderSvg,
 	UserSvg,
 	PhoneSvg,
+	HomeSvg,
+	QuickListSvg,
+	CategoriesSvg,
+	InstaDishSvg,
+	CartSvg,
+	Banner1Svg,
+	Banner2Svg,
+	SearchSvg,
+	WalletSvg,
+	LocationSvg,
 } from './svg'
 
 type IconProps = {
@@ -111,6 +121,42 @@ const Phone: React.FC<IconProps> = ({ ...rest }) => {
 	return <PhoneSvg {...rest} />
 }
 
+const Home: React.FC<IconProps> = ({ ...rest }) => {
+	return <HomeSvg {...rest} />
+}
+const QuickList: React.FC<IconProps> = ({ ...rest }) => {
+	return <QuickListSvg {...rest} />
+}
+const Categories: React.FC<IconProps> = ({ ...rest }) => {
+	return <CategoriesSvg {...rest} />
+}
+const InstaDish: React.FC<IconProps> = ({ ...rest }) => {
+	return <InstaDishSvg {...rest} />
+}
+const Cart: React.FC<IconProps> = ({ ...rest }) => {
+	return <CartSvg {...rest} />
+}
+
+const Banner1: React.FC<IconProps> = ({ ...rest }) => {
+	return <Banner1Svg {...rest} />
+}
+
+const Banner2: React.FC<IconProps> = ({ ...rest }) => {
+	return <Banner2Svg {...rest} />
+}
+
+const Search: React.FC<IconProps> = ({ ...rest }) => {
+	return <SearchSvg {...rest} />
+}
+
+const Wallet: React.FC<IconProps> = ({ ...rest }) => {
+	return <WalletSvg {...rest} />
+}
+
+const Location: React.FC<IconProps> = ({ ...rest }) => {
+	return <LocationSvg {...rest} />
+}
+
 const Icon = {
 	ArrowLeft,
 	AppLogo,
@@ -135,6 +181,16 @@ const Icon = {
 	Calender,
 	User,
 	Phone,
+	Home,
+	QuickList,
+	Categories,
+	InstaDish,
+	Cart,
+	Banner1,
+	Banner2,
+	Search,
+	Wallet,
+	Location,
 }
 
 export default Icon
